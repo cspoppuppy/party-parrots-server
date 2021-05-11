@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const app = express();
 const apiRouter = require('./routes/api');
 const signUpRouter = require('./routes/user');
+const parrotRouter = require('./routes/parrot');
 const PORT = process.env.PORT;
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
@@ -22,3 +23,4 @@ app.listen(PORT, () => {
 
 app.use('/api', apiRouter);
 app.use('/api/users', signUpRouter);
+app.use('/api/parrots', parrotRouter);
