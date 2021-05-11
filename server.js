@@ -3,13 +3,22 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
-const apiRouter = require ('./routes/api');
+const apiRouter = require('./routes/api');
+const signUpRouter = require('./routes/user');
 const PORT = process.env.PORT;
 
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.on('error', (error) => console.log(error));
+db.once('open', () => console.log('Connected'));
+
 app.listen(PORT, () => {
-  console.log(`Server is working on ${PORT}`);
+	console.log(`Server is working on ${PORT}`);
 });
 
 app.use('/api', apiRouter);
+app.use('/api/users', signUpRouter);
