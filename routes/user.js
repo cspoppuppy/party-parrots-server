@@ -5,29 +5,28 @@ const User = require('../models/user');
 // const bcrpyt = require('bcrypt');
 
 router.get('/', (req, res) => {
-	User.find()
-	.then(data =>
-		res.send(data))
+	User.find().then((data) => res.send(data));
 });
 
 //Create User route
 router.post('/', (req, res) => {
-	const userData = new User ({
+	console.log(req.body);
+	const userData = new User({
 		email: req.body.email,
 		username: req.body.username,
 		password: req.body.password,
 		forename: req.body.forename,
 		lastname: req.body.lastname,
-		type: req.body.type
+		type: req.body.type,
 	});
-	userData.save()
-	.then(data => {
-		res.status(201).send("Success -user saved to database");
-		res.send(userData);
-	})
-	.catch(err => {
-		res.status(422).send("Error - user not saved to database");
-	})
+	userData
+		.save()
+		.then((data) => {
+			res.status(201).send(userData);
+		})
+		.catch((err) => {
+			res.status(422).send('Error - user not saved to database');
+		});
 });
 
 module.exports = router;
