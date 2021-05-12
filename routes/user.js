@@ -5,7 +5,9 @@ const User = require('../models/user');
 // const bcrpyt = require('bcrypt');
 
 router.get('/', (req, res) => {
-	res.send('sign up router');
+	User.find()
+	.then(data =>
+		res.send(data))
 });
 
 //Create User route
@@ -16,11 +18,12 @@ router.post('/', (req, res) => {
 		password: req.body.password,
 		forename: req.body.forename,
 		lastname: req.body.lastname,
-		type: req.body.type 
+		type: req.body.type
 	});
 	userData.save()
 	.then(data => {
 		res.status(201).send("Success -user saved to database");
+		res.send(userData);
 	})
 	.catch(err => {
 		res.status(422).send("Error - user not saved to database");

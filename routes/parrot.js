@@ -4,7 +4,10 @@ const Parrot = require('../models/parrot');
 
 
 router.get('/', (req, res) => {
-	res.send('add a parrot router');
+	//res.send('add a parrot router');
+	Parrot.find()
+	.then(data =>
+		res.send(data))
 });
 // create parrot route
 router.post('/', (req, res) => {
@@ -23,6 +26,7 @@ router.post('/', (req, res) => {
 	parrotData.save()
 	.then(data => {
 		res.status(201).send("Success -parrot saved to database");
+		res.send(parrotData);
 	})
 	.catch(err => {
 		res.status(422).send("Error - parrot not saved to database");
