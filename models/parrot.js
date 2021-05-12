@@ -19,4 +19,4 @@ const parrotSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.module('parrots', parrotSchema);
+module.exports = mongoose.model('parrots', parrotSchema);
