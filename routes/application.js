@@ -1,23 +1,43 @@
 const router = require('express').Router();
+const Application = require('../models/application');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 	const parrotId = req.parrotId;
+
+	try {
+		const applications = await Application.find({ parrot: parrotId });
+		res.send(applications);
+	} catch (error) {
+		res.send(error);
+	}
 
 	res.send(`applications for parrot ${parrotId}`);
 });
 
-router.get('/:applicationId', (req, res) => {
-	const parrotId = req.parrotId;
+router.get('/:applicationId', async (req, res) => {
 	const applicationId = req.params.applicationId;
 
-	res.send(`application ${applicationId} for parrot ${parrotId}`);
+	try {
+		const application = await Application.find({ _id: applicationId });
+		res.send(application);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
-router.post('/', (req, res) => {
-	const parrotId = req.parrotId;
-	const userId = req.body.userId;
+router.post('/', async (req, res) => {
+	const application = new Application({
+		parrot: req.parrotId,
+		user: req.body.userId,
+		message: req.body.message,
+	});
 
-	res.send(`user ${userId} apply for parrot ${parrotId}`);
+	try {
+		const newApplication = await application.save();
+		res.send(newApplication);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 module.exports = router;
