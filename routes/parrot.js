@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
 			res.status(201).send(parrotData);
 		})
 		.catch((err) => {
+			res.send(parrotData);
 			res.status(422).send('Error - parrot not saved to database');
 		});
 });

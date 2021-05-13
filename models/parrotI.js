@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const parrotSchema = new mongoose.Schema({
+const parrotSchemaImage = new mongoose.Schema({
 	name: { type: String, required: true },
 	charity: { type: String, required: true },
 	species: { type: String, required: true },
@@ -19,4 +19,4 @@ const parrotSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('parrots', parrotSchema);
+module.exports = mongoose.model('parrotsImage', parrotSchemaImage);
