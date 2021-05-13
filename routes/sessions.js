@@ -8,7 +8,32 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  User.findOne({ "username": req.body.username }, 'username' ).then((data) => res.send(data));
+
+  User.findOne({ "username": req.body.username }).then((data) => {
+    if (data.username === null) {
+    return res.json({ 
+      status: 401, 
+      message: "Invalid username", 
+      loggedIn: false 
+    })
+  } else if (data.password !== req.body.password) {
+    return res.json({
+      status: 401, 
+      message: "Password is incorrect", 
+      loggedIn: false 
+    })
+  } else {
+    return res.json({
+      loggedIn: true,
+      user: data.username
+    })
+  }
+  });
+
+
+ 
+
+
 });
 
 
