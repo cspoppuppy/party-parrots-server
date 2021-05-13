@@ -31,10 +31,15 @@ router.post('/', (req, res) => {
 		});
 });
 
-router.get('/:parrotId', (req, res) => {
+router.get('/:parrotId', async (req, res) => {
 	const parrotId = req.params.parrotId;
 
-	res.send(`view parrot ${parrotId}`);
+	try {
+		const parrot = await Parrot.findOne({ _id: parrotId }).populate('user', 'username').exec();
+		res.send(parrot);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 router.use(
