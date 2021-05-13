@@ -12,7 +12,6 @@ If successful, the console will return
 
 ```Success - user saved to database```
 
-````
 
 To save parrot data to the database using cURL, paste the following line into the terminal (change the localhost port to your .env PORT nunmber)
 The 'user' field must be populated with the \_id field's "ObjectId" property, without the 'ObjectId', e.g.:
@@ -40,3 +39,7 @@ fetch('http://localhost:3000/api/parrots/609bb062584491238f8f11ae/applications',
   method: 'GET'
 })
 ```
+=======
+  http://localhost:3000/api/parrots```
+````
+
