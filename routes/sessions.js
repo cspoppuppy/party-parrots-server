@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
 
   User.findOne({ "username": req.body.username }).then((data) => {
-    if (data.username === null) {
+    if (data === null) {
     return res.json({ 
       status: 401, 
       message: "Invalid username", 
