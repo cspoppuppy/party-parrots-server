@@ -7,9 +7,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-const apiRouter = require('./routes/api');
+
 const signUpRouter = require('./routes/user');
 const parrotRouter = require('./routes/parrot');
+const signInRouter = require('./routes/sessions');
+
 const PORT = process.env.PORT;
 
 app.use(cors());
@@ -26,6 +28,6 @@ app.listen(PORT, () => {
 	console.log(`Server is working on ${PORT}`);
 });
 
-app.use('/api', apiRouter);
 app.use('/api/users', signUpRouter);
 app.use('/api/parrots', parrotRouter);
+app.use('/api/sessions', signInRouter);
