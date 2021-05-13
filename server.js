@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -11,6 +12,7 @@ const signUpRouter = require('./routes/user');
 const parrotRouter = require('./routes/parrot');
 const PORT = process.env.PORT;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,8 +21,6 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.log(error));
 db.once('open', () => console.log('Connected'));
-
-
 
 app.listen(PORT, () => {
 	console.log(`Server is working on ${PORT}`);

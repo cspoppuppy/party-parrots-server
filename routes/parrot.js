@@ -3,9 +3,9 @@ const router = express.Router();
 const Parrot = require('../models/parrot');
 
 router.get('/', (req, res) => {
-	//res.send('add a parrot router');
 	Parrot.find().then((data) => res.send(data));
 });
+
 // create parrot route
 router.post('/', (req, res) => {
 	const parrotData = new Parrot({
