@@ -26,16 +26,16 @@ router.post('/', async (req, res) => {
     })
       } else {
         return res.json({
-          status: 401, 
-          message: "Password is incorrect", 
-          loggedIn: false, 
+          status: 401,
+          message: "Password is incorrect",
+          loggedIn: false,
         })
       }
     } else {
-      return res.json({ 
-        status: 401, 
-        message: "Invalid username", 
-        loggedIn: false 
+      return res.json({
+        status: 401,
+        message: "Invalid username",
+        loggedIn: false
     })
     }
   } catch (error) {
@@ -45,12 +45,12 @@ router.post('/', async (req, res) => {
 });
 
 
-// Logging out 
+// Logging out
 router.get('/signout', (req, res) => {
 	req.session.destroy((err) => {
 		if (err) throw err;
 		res.json({
-      status: 200, 
+      status: 200,
       message: "Log out successful",
     });
 	});

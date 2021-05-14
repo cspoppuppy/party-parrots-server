@@ -39,7 +39,7 @@ store.on('error', function(error) {
   console.log(error);
 });
 
-// 
+//
 app.use(
 		session({
   		secret: 'boys in french',
@@ -47,8 +47,8 @@ app.use(
     	maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week (calculated in milliseconds )
   	},
   	store: store,
-  	resave: true,
-  	saveUninitialized: true
+  	//resave: true,
+  	saveUninitialized: false
 }));
 
 // Authentication function but unsure how it works - have found req.session.isAuth in a log in file
