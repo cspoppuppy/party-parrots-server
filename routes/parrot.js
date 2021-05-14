@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Parrot = require('../models/parrot');
 const applicationRouter = require('./application');
+const Application = require('../models/application');
 
 router.get('/', (req, res) => {
 	Parrot.find().then((data) => res.send(data));
@@ -36,7 +37,8 @@ router.get('/:parrotId', async (req, res) => {
 
 	try {
 		const parrot = await Parrot.findOne({ _id: parrotId }).populate('user', 'username').exec();
-		res.send(parrot);
+		const applications = await Application.find({ parrot: parrotId });
+		res.send({ parrot: parrot, applications: applications });
 	} catch (error) {
 		res.send(error);
 	}
