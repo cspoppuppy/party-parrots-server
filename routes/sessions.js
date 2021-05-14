@@ -7,6 +7,8 @@ router.get('/', (req, res) => {
 	res.send("You are in the right place for logging in")
 });
 
+
+// Logging in
 router.post('/', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -15,6 +17,8 @@ router.post('/', async (req, res) => {
       const passwordsMatch = await bcrypt.compare(req.body.password, user.password);
       if (passwordsMatch) {
         //   ... further code to maintain authentication like jwt or sessions
+        req.session.isAuth = true;
+        req.session.user = user.id;
         return res.json({
         loggedIn: true,
         user: user.username,
@@ -24,7 +28,7 @@ router.post('/', async (req, res) => {
         return res.json({
           status: 401, 
           message: "Password is incorrect", 
-          loggedIn: false 
+          loggedIn: false, 
         })
       }
     } else {
@@ -41,27 +45,15 @@ router.post('/', async (req, res) => {
 });
 
 
-  // User.findOne({ "username": req.body.username }).then((data) => {
-  //   if (data === null) {
-  //   return res.json({ 
-  //     status: 401, 
-  //     message: "Invalid username", 
-  //     loggedIn: false 
-  //   })
-  // } else if (data.password !== req.body.password) {
-  //   return res.json({
-  //     status: 401, 
-  //     message: "Password is incorrect", 
-  //     loggedIn: false 
-  //   })
-  // } else {
-  //   return res.json({
-  //     loggedIn: true,
-  //     user: data.username
-  //   })
-  // }
-  // });
-
- // NEED TO RETURN TYPE OF USER IN LOG IN!!!
+// Logging out 
+router.get('/signout', (req, res) => {
+	req.session.destroy((err) => {
+		if (err) throw err;
+		res.json({
+      status: 200, 
+      message: "Log out successful",
+    });
+	});
+});
 
 module.exports = router;
