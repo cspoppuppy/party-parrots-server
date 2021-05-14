@@ -54,6 +54,7 @@ router.get('/signout', (req, res) => {
       message: "Log out successful",
     });
 	});
+	req.session = null;
 });
 
 module.exports = router;

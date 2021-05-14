@@ -47,8 +47,8 @@ app.use(
     	maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week (calculated in milliseconds )
   	},
   	store: store,
-  	//resave: true,
-  	saveUninitialized: false
+  	saveUninitialized: false,
+		unset: "destroy"
 }));
 
 // Authentication function but unsure how it works - have found req.session.isAuth in a log in file
