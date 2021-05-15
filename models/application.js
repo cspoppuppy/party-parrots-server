@@ -12,6 +12,7 @@ const applicationSchema = new mongoose.Schema({
 		ref: 'users',
 	},
 	message: { type: String, required: true },
+	approved: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('applications', applicationSchema);
