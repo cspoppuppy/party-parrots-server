@@ -29,7 +29,7 @@ let upload = multer({
 			cb(null, { fileName: file.fieldname });
 		},
 		key: (req, file, cb) => {
-			cb(null, uuid());
+			cb(null, req.s3Key);
 		},
 	}),
 });
