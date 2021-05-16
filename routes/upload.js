@@ -24,6 +24,7 @@ let upload = multer({
 	storage: multerS3({
 		s3,
 		bucket: process.env.AWS_S3_BUCKET,
+		acl: 'public-read',
 		metadata: (req, file, cb) => {
 			cb(null, { fileName: file.fieldname });
 		},
@@ -48,6 +49,7 @@ const uploadToS3 = (req, res) => {
 };
 
 router.post('/', async (req, res) => {
+	console.log(req.body);
 	uploadToS3(req, res)
 		.then((downloadUrl) => {
 			console.log(downloadUrl);
