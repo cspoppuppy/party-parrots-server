@@ -10,12 +10,17 @@ router.get('/', (req, res) => {
 
 // create parrot route
 router.post('/', (req, res) => {
+	console.log(req.body);
 	const parrotData = new Parrot({
 		name: req.body.name,
 		charity: req.body.charity,
 		species: req.body.species,
 		age: req.body.age,
 		location: req.body.location,
+		geocode: {
+			latitude: req.body.latitude,
+			longitude: req.body.longitude,
+		},
 		gender: req.body.gender,
 		bio: req.body.bio,
 		specialNeeds: req.body.specialNeeds,
@@ -52,5 +57,27 @@ router.use(
 	},
 	applicationRouter
 );
+
+// update parrot geocode
+router.patch('/:parrotId', async (req, res) => {
+	const parrotId = req.params.parrotId;
+	const parrot = await Parrot.findOne({ _id: parrotId });
+
+	console.log(parrot, req.body);
+	if (parrot !== null) {
+		try {
+			(parrot.geocode = {
+				latitude: req.body.latitude,
+				longitude: req.body.longitude,
+			}),
+				parrot.save();
+			res.send(parrot);
+		} catch (error) {
+			res.send(error);
+		}
+	} else {
+		res.status(400).send('Parrot not exist');
+	}
+});
 
 module.exports = router;
