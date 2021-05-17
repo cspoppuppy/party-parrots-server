@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 router.get('/', (req, res) => {
 	res.send('You are in the right place for logging in');
 });
 
+// Logging in
 router.post('/', async (req, res) => {
 	try {
 		const user = await User.findOne({ username: req.body.username });
@@ -15,12 +17,14 @@ router.post('/', async (req, res) => {
 			const passwordsMatch = await bcrypt.compare(req.body.password, user.password);
 			if (passwordsMatch) {
 				//   ... further code to maintain authentication like jwt or sessions
-				return res.json({
-					loggedIn: true,
-					uerId: user._id,
-					user: user.username,
-					userType: user.type,
-				});
+				req.session.isAuth = true;
+				req.session.user = user.id;
+				// return res.json({
+				// 	loggedIn: true,
+				// 	user: user.username,
+				// 	userType: user.type,
+				// });
+				res.send({ sessionId: req.sessionID, userId: user._id, username: user.username, userType: user.type });
 			} else {
 				return res.json({
 					status: 401,
@@ -38,6 +42,18 @@ router.post('/', async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		res.status(500).send('Server Error Occured');
+	}
+});
+
+
+// Logging out
+router.post('/signout', async (req, res) => {
+	try {
+		const conn = mongoose.connection;
+		await conn.collection('sessions').deleteOne({ _id: req.body.sessionId });
+		res.send('Successfully Logged Out');
+	} catch (error) {
+		res.send(error);
 	}
 });
 
