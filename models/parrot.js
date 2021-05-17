@@ -6,15 +6,16 @@ const parrotSchema = new mongoose.Schema({
 	species: { type: String, required: true },
 	age: { type: String, required: true },
 	location: { type: String, required: true },
+	geocode: { type: Object },
 	gender: { type: String, required: true },
-  bio: { type: String, required: true },
-  specialNeeds: { type: String, required: true },
-  imageUrl: { type: String },
-  user: {
+	bio: { type: String, required: true },
+	specialNeeds: { type: String, required: true },
+	imageUrl: { type: String },
+	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true,
 		ref: 'users',
-  }
+	},
 });
 
 module.exports = mongoose.model('parrots', parrotSchema);

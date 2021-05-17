@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.907.0",
     "bcrypt": "^5.0.1",
     "connect-mongodb-session": "^2.4.1",
     "cors": "^2.8.5",
@@ -19,8 +20,9 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.1",
     "mongoose": "^5.12.8",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "dotenv": "^9.0.2",

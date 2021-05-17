@@ -45,6 +45,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
+
 // Logging out
 router.post('/signout', async (req, res) => {
 	try {
@@ -55,5 +56,28 @@ router.post('/signout', async (req, res) => {
 		res.send(error);
 	}
 });
+
+// User.findOne({ "username": req.body.username }).then((data) => {
+//   if (data === null) {
+//   return res.json({
+//     status: 401,
+//     message: "Invalid username",
+//     loggedIn: false
+//   })
+// } else if (data.password !== req.body.password) {
+//   return res.json({
+//     status: 401,
+//     message: "Password is incorrect",
+//     loggedIn: false
+//   })
+// } else {
+//   return res.json({
+//     loggedIn: true,
+//     user: data.username
+//   })
+// }
+// });
+
+// NEED TO RETURN TYPE OF USER IN LOG IN!!!
 
 module.exports = router;
