@@ -43,3 +43,11 @@ fetch('http://localhost:3000/api/parrots/609bb062584491238f8f11ae/applications',
   http://localhost:3000/api/parrots```
 ````
 
+### Image Upload
+
+Libraries:
+
+-   aws-sdk
+-   multer
+-   multer-s3
+-   uuid

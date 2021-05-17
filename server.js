@@ -14,6 +14,7 @@ const app = express();
 const signUpRouter = require('./routes/user');
 const parrotRouter = require('./routes/parrot');
 const signInRouter = require('./routes/sessions');
+const uploadRouter = require('./routes/upload');
 
 const PORT = process.env.PORT;
 
@@ -34,3 +35,4 @@ app.listen(PORT, () => {
 app.use('/api/users', signUpRouter);
 app.use('/api/parrots', parrotRouter);
 app.use('/api/sessions', signInRouter);
+app.use('/api/uploads', uploadRouter);
