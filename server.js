@@ -1,38 +1,39 @@
-if (process.env.NODE_ENV !== 'production') {
-	require('dotenv').config();
-}
-
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-// const passport = require('passport');
+//express
+const express = require("express");
 const app = express();
 
-// const initializePassport = require('./passport-config')
-// initializePassport(passport)
+//get the database setup
+const db = require("./config/databaseSetup");
 
-const signUpRouter = require('./routes/user');
-const parrotRouter = require('./routes/parrot');
-const signInRouter = require('./routes/sessions');
-const uploadRouter = require('./routes/upload');
+// enables cors for all routes
+const cors = require("cors");
+app.use(cors());
+
+// using dotenv for the .env file
+require("dotenv/config");
+
+// routes
+const signUpRouter = require("./routes/user");
+const parrotRouter = require("./routes/parrot");
+const signInRouter = require("./routes/sessions");
 
 const PORT = process.env.PORT;
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+// define urls
+app.use("/api/users", signUpRouter);
+app.use("/api/parrots", parrotRouter);
+app.use("/api/sessions", signInRouter);
 
-const db = mongoose.connection;
-db.on('error', (error) => console.log(error));
-db.once('open', () => console.log('Connected'));
+// the database only connects if in the development mode
 
-app.listen(PORT, () => {
-	console.log(`Server is working on ${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  db.connect();
+  app.listen(PORT, () => {
+    console.log(`Server is working on ${PORT}`);
+  });
+}
 
-app.use('/api/users', signUpRouter);
-app.use('/api/parrots', parrotRouter);
-app.use('/api/sessions', signInRouter);
-app.use('/api/uploads', uploadRouter);
+module.exports = app;
