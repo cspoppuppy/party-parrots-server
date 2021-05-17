@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 // const { route } = require('.');
 const router = express.Router();
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
-router.get('/', (req, res) => {
-	User.find().then((data) => res.send(data));
+router.get("/", (req, res) => {
+  User.find().then((data) => res.status(200).send(data));
 });
 
 router.post("/", async (req, res) => {
@@ -14,11 +14,11 @@ router.post("/", async (req, res) => {
     const hashedPwd = await bcrypt.hash(req.body.password, 10);
     const userData = await User.create({
       email: req.body.email,
-			username: req.body.username,
-			password: hashedPwd,
-			forename: req.body.forename,
-			lastname: req.body.lastname,
-			type: req.body.type,
+      username: req.body.username,
+      password: hashedPwd,
+      forename: req.body.forename,
+      lastname: req.body.lastname,
+      type: req.body.type,
     });
     res.status(201).send(userData);
   } catch (error) {

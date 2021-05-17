@@ -1,19 +1,17 @@
-if (process.env.NODE_ENV !== 'production') {
-	require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-// const passport = require('passport');
+const mongoose = require("mongoose");
+const express = require("express");
+const cors = require("cors");
+//const routes = require("./routes/");
+
 const app = express();
 
-// const initializePassport = require('./passport-config')
-// initializePassport(passport)
-
-const signUpRouter = require('./routes/user');
-const parrotRouter = require('./routes/parrot');
-const signInRouter = require('./routes/sessions');
+const signUpRouter = require("./routes/user");
+const parrotRouter = require("./routes/parrot");
+const signInRouter = require("./routes/sessions");
 
 const PORT = process.env.PORT;
 
@@ -24,13 +22,13 @@ app.use(express.urlencoded({ extended: false }));
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
 const db = mongoose.connection;
-db.on('error', (error) => console.log(error));
-db.once('open', () => console.log('Connected'));
+db.on("error", (error) => console.log(error));
+db.once("open", () => console.log("Connected"));
 
 app.listen(PORT, () => {
-	console.log(`Server is working on ${PORT}`);
+  console.log(`Server is working on ${PORT}`);
 });
 
-app.use('/api/users', signUpRouter);
-app.use('/api/parrots', parrotRouter);
-app.use('/api/sessions', signInRouter);
+app.use("/api/users", signUpRouter);
+app.use("/api/parrots", parrotRouter);
+app.use("/api/sessions", signInRouter);
