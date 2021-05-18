@@ -4,12 +4,12 @@ const Parrot = require('../models/parrot');
 const applicationRouter = require('./application');
 const Application = require('../models/application');
 
-router.get('/', (req, res) => {
-	Parrot.find().then((data) => res.send(data));
+router.get('/', async (req, res) => {
+	await Parrot.find().then((data) => res.send(data));
 });
 
 // create parrot route
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 	console.log(req.body);
 	const parrotData = new Parrot({
 		name: req.body.name,
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
 		imageUrl: req.body.imageUrl,
 		user: req.body.user,
 	});
-	parrotData
+	await parrotData
 		.save()
 		.then((data) => {
 			res.status(201).send(parrotData);
