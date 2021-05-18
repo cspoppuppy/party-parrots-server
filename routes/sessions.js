@@ -33,7 +33,8 @@ router.post('/', async (req, res) => {
 });
 
 // Logging out
-router.get('/:sessionId/signout', async (req, res) => {
+router.delete('/:sessionId', async (req, res) => {
+	console.log('Signout, ', req.params.sessionId);
 	try {
 		const conn = mongoose.connection;
 		await conn.collection('sessions').deleteOne({ _id: req.params.sessionId });
