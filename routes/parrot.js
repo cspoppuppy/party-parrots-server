@@ -5,7 +5,24 @@ const applicationRouter = require('./application');
 const Application = require('../models/application');
 
 router.get('/', async (req, res) => {
-	await Parrot.find().then((data) => res.send(data));
+	// await Parrot.find().then((data) => res.send(data));
+	try {
+		const parrots = await Parrot.find();
+		const approvedApplications = await Application.find({ approved: true });
+		res.send({ parrots: parrots, approvedApplications: approvedApplications });
+	} catch (error) {
+		res.send(error);
+	}
+});
+
+router.get('/all', async (req, res) => {
+	try {
+		const parrots = await Parrot.find();
+		const approvedApplications = await Application.find({ approved: true });
+		res.send({ parrots: parrots, approvedApplications: approvedApplications });
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 // create parrot route
