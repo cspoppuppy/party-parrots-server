@@ -19,41 +19,27 @@ router.post('/', async (req, res) => {
 				//   ... further code to maintain authentication like jwt or sessions
 				req.session.isAuth = true;
 				req.session.user = user.id;
-				// return res.json({
-				// 	loggedIn: true,
-				// 	user: user.username,
-				// 	userType: user.type,
-				// });
 				res.send({ sessionId: req.sessionID, userId: user._id, username: user.username, userType: user.type });
 			} else {
-				return res.json({
-					status: 401,
-					message: 'Password is incorrect',
-					loggedIn: false,
-				});
+				return res.status(401).send({ message: 'Password is incorrect' });
 			}
 		} else {
-			return res.json({
-				status: 401,
-				message: 'Invalid username',
-				loggedIn: false,
-			});
+			return res.status(401).send({ message: 'Invalid username' });
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(500).send('Server Error Occured');
+		res.status(500).send({ message: 'Server Error Occured' });
 	}
 });
 
-
 // Logging out
-router.post('/signout', async (req, res) => {
+router.get('/:sessionId/signout', async (req, res) => {
 	try {
 		const conn = mongoose.connection;
-		await conn.collection('sessions').deleteOne({ _id: req.body.sessionId });
-		res.send('Successfully Logged Out');
+		await conn.collection('sessions').deleteOne({ _id: req.params.sessionId });
+		res.send({ message: 'Successfully Logged Out' });
 	} catch (error) {
-		res.send(error);
+		res.send({ message: error });
 	}
 });
 
