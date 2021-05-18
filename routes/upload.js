@@ -39,7 +39,7 @@ const singleFileUpload = upload.single('image');
 const uploadToS3 = (req, res) => {
 	console.log('uploading to S3...');
 	req.s3Key = uuid();
-	let downloadUrl = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_S3_BUCKET}/${req.s3Key}`;
+	let downloadUrl = `https://${process.env.AWS_S3_BUCKET}.s3.amazonaws.com/${req.s3Key}`;
 	return new Promise((resolve, reject) => {
 		return singleFileUpload(req, res, (error) => {
 			if (error) return reject(error);
@@ -49,7 +49,7 @@ const uploadToS3 = (req, res) => {
 };
 
 router.post('/', async (req, res) => {
-	console.log(req.body);
+	console.log(req);
 	uploadToS3(req, res)
 		.then((downloadUrl) => {
 			console.log(downloadUrl);
