@@ -15,16 +15,6 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/all', async (req, res) => {
-	try {
-		const parrots = await Parrot.find();
-		const approvedApplications = await Application.find({ approved: true });
-		res.send({ parrots: parrots, approvedApplications: approvedApplications });
-	} catch (error) {
-		res.send(error);
-	}
-});
-
 // create parrot route
 router.post('/', async (req, res) => {
 	console.log(req.body);
@@ -59,7 +49,7 @@ router.get('/:parrotId', async (req, res) => {
 
 	try {
 		const parrot = await Parrot.findOne({ _id: parrotId }).populate('user', 'username').exec();
-		const applications = await Application.find({ parrot: parrotId });
+		const applications = await Application.find({ parrot: parrotId }).populate('user', 'username').exec();
 		res.send({ parrot: parrot, applications: applications });
 	} catch (error) {
 		res.send(error);
